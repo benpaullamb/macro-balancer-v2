@@ -38,16 +38,13 @@ export async function searchTesco(name: string): Promise<TescoProduct[]> {
   });
 }
 
-export async function getFoodFromTescoProduct(product: TescoProduct): Promise<Food | undefined> {
+export async function getFoodFromTescoProduct(product: TescoProduct): Promise<Food> {
   const { data: productPage } = await axios.get(
     `https://www.tesco.com/groceries/en-GB/products/${encodeURIComponent(product.id)}`
   );
   const { document } = new JSDOM(productPage).window;
 
-  const tableElement = document.querySelector('table.product__info-table')?.outerHTML;
-  if (!tableElement) {
-    return;
-  }
+  const tableElement = document.querySelector('table.product__info-table')?.outerHTML!;
   const [table] = tableToJSON.convert(tableElement);
 
   return new Food({

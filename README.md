@@ -4,5 +4,4 @@ Rewritten and tested in TypeScript
 
 ## TODO
 
-- Tesco Integration
 - Svelte UI
